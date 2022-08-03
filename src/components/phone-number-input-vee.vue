@@ -297,15 +297,23 @@ const emitPhoneData = (): void => {
 };
 
 /**
+ * emitAll
+ * used to emit all event
+ */
+const emitAll = () :void => {
+  emit("country", defaultSelected.value.iso2);
+  emitPhone();
+  emitPhoneData();
+}
+
+/**
  * to select any country
  * @param country
  */
 const choose = (country: Country) => {
   defaultSelected.value = country as unknown as Record<string, string>;
   openSelect.value = false;
-  emit("country", String(defaultSelected.value.iso2).toUpperCase());
-  emitPhone();
-  emitPhoneData();
+  emitAll();
 };
 
 /**
@@ -329,7 +337,7 @@ watch(openSelect, () => {
 onMounted(() => {
   // initialize default country selected
   defaultSelected.value = formatPhoneInput(props.value) as Record<any, any>;
-  emit("country", defaultSelected.value.iso2);
+  emitAll();
   // initialize vee validate input value
   inputValue.value = phone.value;
 

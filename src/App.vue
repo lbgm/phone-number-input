@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
 import PhoneInput from "@/components/phone-number-input.vue";
 import PhoneInputVee from "@/components/phone-number-input-vee.vue";
+
 import { Form } from "vee-validate";
 import * as Yup from "yup";
 
@@ -28,7 +30,7 @@ const phoneData = ref({});
       @phone="phone = $event"
       @country="country = $event"
       @phoneData="phoneData = $event"
-      name="dingo"
+      name="cphone"
       label="Entrer votre téléphone"
       required
       :allowed="[]"
@@ -43,7 +45,7 @@ const phoneData = ref({});
       @phone="phone = $event"
       @country="country = $event"
       @phoneData="phoneData = $event"
-      name="dingovee"
+      name="cphonevee"
       label="Votre téléphone est requis"
       required
       :allowed="[]"
