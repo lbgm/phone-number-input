@@ -1,5 +1,5 @@
 {
-  "name": "phone-number-input",
+  "name": "@lbgm/phone-number-input",
   "version": "1.0.8",
   "author": "@lbgm",
   "scripts": {
@@ -51,5 +51,21 @@
     "typescript": "~4.7.4",
     "vite": "^3.0.1",
     "vue-tsc": "^0.38.8"
-  }
+  },
+  "description": "Simple Phone Number Input for VueJs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lbgm/phone-number-input.git"
+  },
+  "keywords": [
+    "vuejs",
+    "phone-number-input",
+    "typescript",
+    "vite"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lbgm/phone-number-input/issues"
+  },
+  "homepage": "https://github.com/lbgm/phone-number-input#readme"
 }
