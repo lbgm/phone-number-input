@@ -1,46 +1,149 @@
 # phone-number-input
 
-This template should help get you started developing with Vue 3 in Vite.
+Simple Phone Number Input for VueJs
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+<img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182822827-2e1db537-a767-4f72-83f4-5b55a4db5fc7.png">
 
-## Type Support for `.vue` Imports in TS
+<img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182822953-8df23afc-18dd-4bab-88ec-d1edac924eb0.png">
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## Props
+  Interface: 
+  ```ts
+  interface Props {
+  value?: string;
+  label?: string;
+  hasError?: boolean;
+  hasSuccess?: boolean;
+  successMessage?: string;
+  errorMessage?: string;
+  placeholder?: string;
+  name?: string;
+  required?: boolean;
+  defaultCountry?: string;
+  arrow?: boolean;
+  listHeight?: number;
+  allowed?: string[];
+ }
+  ```
+  
+ Default values:
+ ```js
+ {
+  value: "", // like '22997000000', ${dialCode}${nationalNumber}
+  label: "",
+  hasError: false,
+  hasSuccess: false,
+  successMessage: "",
+  errorMessage: "",
+  placeholder: "",
+  name: "",
+  required: false,
+  defaultCountry: "CI",
+  arrow: true,
+  listHeight: 150,
+  allowed: () => ["BJ", "CI"],
+ }
+ ```
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
-## Customize configuration
+## Use
+ main.ts :
+ ```js
+  import { PhoneInput } from 'phone-number-input';
+  app.component('PhoneInput', PhoneInput);
+ ```
+ App.vue :
+ ```js
+ import 'phone-number-input/dist/style.css';
+ ```
+ 
+ use component:
+ ```html
+    <phone-input
+      @phone="phone = $event"
+      @country="country = $event"
+      @phoneData="phoneData = $event"
+      name="cphone"
+      label="Entrer votre téléphone"
+      required
+      :allowed="[]"
+      :value="'22997788842'"
+    />
+ ```
+ <img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182823223-6be9aa4c-b4d8-4835-aaae-8b79052c0caf.png">
+ 
+ ```js
+  console.log(phone) : 22997788842
+  console.log(country) : BJ
+  console.log(phoneData) : { "country": "BJ", "dialCode": "229", "nationalNumber": "97788842", "number": "+22997788842", "isValid": true }
+ ```
+ 
+ ## Use it with Vee-validate
+ 
+ Sample wrapper code:
+ ```html
+ <template>
+  <phone-input
+    :has-error="hasError"
+    :errorMessage="errorMessage"
+    @phoneData="validatePhone"
+    ref="phoneInput"
+  />
+</template>
+```
+```ts
+<script lang="ts">
+import { useField } from 'vee-validate';
+import { computed, onMounted, getCurrentInstance } from 'vue';
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+interface IPhoneData {
+  country?: string;
+  dialCode?: string;
+  nationalNumber?: string;
+  number?: string;
+  isValid?: boolean;
+}
 
-## Project Setup
+export default {
+  setup(props: any, context: any) {
+    const that: any = getCurrentInstance();
 
-```sh
-npm install
+    const {
+      value: inputValue,
+      errorMessage,
+      handleBlur,
+      handleChange,
+      meta,
+    } = useField(context.attrs.name, undefined, {
+      initialValue: context.attrs.value ? context.attrs.value : '',
+      validateOnValueUpdate: false,
+    });
+
+    // compute error from vee-validate
+    const hasError = computed((): boolean => {
+      return errorMessage.value !== undefined;
+    });
+
+    const validatePhone = (data: IPhoneData) => {
+      handleChange(data.nationalNumber, false);
+      context.emit('phoneData', data);
+    };
+
+    onMounted(() => {
+      if (that.refs.phoneInput.phone) {
+        handleChange(that.refs.phoneInput.phone);
+      }
+    });
+
+    return {
+      hasError,
+      errorMessage,
+      validatePhone,
+    };
+  },
+};
+</script>
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
