@@ -62,12 +62,12 @@
     <!--select option-->
     <div
       ref="selectOptions"
-      class="w-full rounded border border-DADEE3 bg-white absolute mt-[0.281rem] z-[1] custom-scrll"
+      class="w-full rounded border border-DADEE3 bg-white absolute z-[1] custom-scrll"
       v-if="openSelect"
       data-widget-item="base-phone-select-group"
       :class="{
         'bottom-0': popupPos === 'top',
-        'mt-[0.281rem]': popupPos === 'bottom',
+        'mt-[0.281rem] top-full': popupPos === 'bottom',
       }"
       :style="{
         maxHeight: `${listHeight}px`,
@@ -221,12 +221,8 @@ const toggleSelect = () => {
 
   // calculate popup position: top or bottom
   const selectRect = that.refs.selectPhone.getBoundingClientRect();
-  const bodyRect = document.body.getBoundingClientRect();
   // y
-  popupPos.value =
-    Math.abs(bodyRect.height - selectRect.bottom) <= listHeight.value
-      ? "top"
-      : "bottom";
+  popupPos.value = selectRect.bottom < listHeight.value ? "top" : "bottom";
 };
 
 /**
