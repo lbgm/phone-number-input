@@ -5,6 +5,12 @@ Simple Phone Number Input for VueJs
 <img width="599" alt="image" src="https://user-images.githubusercontent.com/92580505/182828046-989095ca-f6bf-420e-92fc-98fb99dab25e.png">
 
 
+## install
+```sh
+npm i @lbgm/phone-number-input
+```
+
+
 ## Props
   Interface: 
   ```ts
