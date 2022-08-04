@@ -12,7 +12,7 @@
       <span>{{ label }}</span
       >&thinsp;<span
         v-if="required"
-        class="text-left text-DA1414 font-semibold opacity-80 text-xs leading-5"
+        class="text-left text-DA1414 font-semibold opacity-80 text-xs"
         >*</span
       >
     </label>
