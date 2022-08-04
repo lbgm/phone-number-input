@@ -12,7 +12,7 @@ npm i @lbgm/phone-number-input
 
 
 ## Props
-  Interface: 
+  Interface:
   ```ts
   interface Props {
     value?: string;
@@ -30,7 +30,7 @@ npm i @lbgm/phone-number-input
     allowed?: string[];
  }
   ```
-  
+
  Default values:
  ```js
  {
@@ -54,17 +54,17 @@ npm i @lbgm/phone-number-input
 ## Use
  main.ts :
  ```js
-  import { PhoneInput } from 'phone-number-input';
-  
+  import { PhoneInput } from '@lbgm/phone-number-input';
+
   // register as global component
   app.component('PhoneInput', PhoneInput);
  ```
  App.vue :
  ```js
  // import component style
- import 'phone-number-input/dist/style.css';
+ import '@lbgm/phone-number-input/dist/style.css';
  ```
- 
+
  use component:
  ```html
     <phone-input
@@ -79,15 +79,15 @@ npm i @lbgm/phone-number-input
     />
  ```
  <img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182823223-6be9aa4c-b4d8-4835-aaae-8b79052c0caf.png">
- 
+
  ```js
   console.log(phone) : 22997788842
   console.log(country) : BJ
   console.log(phoneData) : { "country": "BJ", "dialCode": "229", "nationalNumber": "97788842", "number": "+22997788842", "isValid": true }
  ```
- 
+
  ## Use it with Vee-validate
- 
+
  Sample wrapper code:
  ```html
  <template>
