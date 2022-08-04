@@ -2,8 +2,7 @@
 
 Simple Phone Number Input for VueJs
 
-<img width="622" alt="image" src="https://user-images.githubusercontent.com/92580505/182826625-445b09ca-1a66-46ee-a402-1650c56e3e09.png">
-<img width="622" alt="image" src="https://user-images.githubusercontent.com/92580505/182826726-0b47db91-da15-4792-8daf-61b63f99b497.png">
+<img width="599" alt="image" src="https://user-images.githubusercontent.com/92580505/182828046-989095ca-f6bf-420e-92fc-98fb99dab25e.png">
 
 
 ## Props
