@@ -2,29 +2,27 @@
 
 Simple Phone Number Input for VueJs
 
-
-<img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182822827-2e1db537-a767-4f72-83f4-5b55a4db5fc7.png">
-
-<img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182822953-8df23afc-18dd-4bab-88ec-d1edac924eb0.png">
+<img width="622" alt="image" src="https://user-images.githubusercontent.com/92580505/182826625-445b09ca-1a66-46ee-a402-1650c56e3e09.png">
+<img width="622" alt="image" src="https://user-images.githubusercontent.com/92580505/182826726-0b47db91-da15-4792-8daf-61b63f99b497.png">
 
 
 ## Props
   Interface: 
   ```ts
   interface Props {
-  value?: string;
-  label?: string;
-  hasError?: boolean;
-  hasSuccess?: boolean;
-  successMessage?: string;
-  errorMessage?: string;
-  placeholder?: string;
-  name?: string;
-  required?: boolean;
-  defaultCountry?: string;
-  arrow?: boolean;
-  listHeight?: number;
-  allowed?: string[];
+    value?: string;
+    label?: string;
+    hasError?: boolean;
+    hasSuccess?: boolean;
+    successMessage?: string;
+    errorMessage?: string;
+    placeholder?: string;
+    name?: string;
+    required?: boolean;
+    defaultCountry?: string;
+    arrow?: boolean;
+    listHeight?: number;
+    allowed?: string[];
  }
   ```
   
@@ -52,10 +50,13 @@ Simple Phone Number Input for VueJs
  main.ts :
  ```js
   import { PhoneInput } from 'phone-number-input';
+  
+  // register as global component
   app.component('PhoneInput', PhoneInput);
  ```
  App.vue :
  ```js
+ // import component style
  import 'phone-number-input/dist/style.css';
  ```
  
