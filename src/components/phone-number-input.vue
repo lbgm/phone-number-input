@@ -2,90 +2,94 @@
   <div
     ref="selectPhone"
     data-widget-item="baseinput"
-    class="flex flex-col items-baseline relative"
+    class="flex flex-col relative"
   >
-    <label
-      class="cursor-pointer baseinput-label text-sm text-left leading-[1.125rem] -tracking-[0.1px] opacity-80 text-black font-semibold mb-2 select-none"
-      :for="name"
-      v-if="label"
-    >
-      <span>{{ label }}</span
-      >&thinsp;<span
-        v-if="required"
-        class="text-left text-DA1414 font-semibold opacity-80 text-xs"
-        >*</span
+    <!--phone-number-input core-->
+    <div data-widget-phone-number-input="lbgm" class="w-full flex flex-col relative">
+      <label
+        class="cursor-pointer baseinput-label text-sm text-left leading-[1.125rem] -tracking-[0.1px] opacity-80 text-black font-semibold mb-2 select-none"
+        :for="name"
+        v-if="label"
       >
-    </label>
-    <!--input-->
-    <div
-      ref="selectPhoneButton"
-      class="bg-white baseinput-core border w-full border-gray rounded-lg py-3 px-4 flex flex-shrink flex-nowrap items-center space-x-2"
-      :class="{ error: hasError, success: hasSuccess }"
-    >
-      <span
-        @click="toggleSelect()"
-        class="inline-flex flex-nowrap items-center space-x-2 cursor-pointer"
-        ref="basePhoneArrow"
-      >
-        <template v-if="arrow">
-          <span v-if="$slots.arrow" class="inline-flex flex-shrink-0">
-            <slot name="arrow" />
-          </span>
-          <span v-else class="inline-flex flex-shrink-0">
-            <Down />
-          </span>
-        </template>
-        <span
-          class="opacity-50 select-none inline-flex flex-whrink-0 font-semibold text-black text-left text-sm leading-[1.225rem]"
+        <span>{{ label }}</span
+        >&thinsp;<span
+          v-if="required"
+          class="text-left text-DA1414 font-semibold opacity-80 text-xs"
+          >*</span
         >
-          {{ `+${defaultSelected.dialCode}` }}
-        </span>
-      </span>
-      <!---->
-      <input
-        :placeholder="placeholder"
-        class="border-0 outline-none appearance-none flex-shrink w-full bg-transparent"
-        type="text"
-        ref="inputBase"
-        :name="name"
-        :id="name"
-        :value="phone"
-        @input="onPhoneInput($event)"
-        :autocomplete="'off'"
-        spellcheck="false"
-        v-typing="{
-          finish: emitPhoneData,
-          timing: 100,
-        }"
-      />
-    </div>
-    <!--select option-->
-    <div
-      ref="selectOptions"
-      class="w-full rounded border border-DADEE3 bg-white absolute z-[1] custom-scrll"
-      v-if="openSelect"
-      data-widget-item="base-phone-select-group"
-      :class="{
-        'bottom-0': popupPos === 'top',
-        'mt-[0.281rem] top-full': popupPos === 'bottom',
-      }"
-      :style="{
-        maxHeight: `${listHeight}px`,
-      }"
-    >
+      </label>
+      <!--input-->
       <div
-        class="w-full py-2 px-4 cursor-pointer text-left hover:bg-[rgba(217,242,236,.5)]"
-        v-for="(country, index) in allowedCountries"
-        @click="choose(country)"
-        :key="index"
+        ref="selectPhoneButton"
+        class="bg-white baseinput-core border w-full border-gray rounded-lg py-3 px-4 flex flex-shrink flex-nowrap items-center space-x-2"
+        :class="{ error: hasError, success: hasSuccess }"
       >
-        <span class="font-semibold text-xs text-394452">
-          {{ country.name }}
+        <span
+          @click="toggleSelect()"
+          class="inline-flex flex-nowrap items-center space-x-2 cursor-pointer"
+          ref="basePhoneArrow"
+        >
+          <template v-if="arrow">
+            <span v-if="$slots.arrow" class="inline-flex flex-shrink-0">
+              <slot name="arrow" />
+            </span>
+            <span v-else class="inline-flex flex-shrink-0">
+              <Down />
+            </span>
+          </template>
+          <span
+            class="opacity-50 select-none inline-flex flex-whrink-0 font-semibold text-black text-left text-sm leading-[1.225rem]"
+          >
+            {{ `+${defaultSelected.dialCode}` }}
+          </span>
         </span>
+        <!---->
+        <input
+          :placeholder="placeholder"
+          class="border-0 outline-none appearance-none flex-shrink w-full bg-transparent"
+          type="text"
+          ref="inputBase"
+          :name="name"
+          :id="name"
+          :value="phone"
+          @input="onPhoneInput($event)"
+          :autocomplete="'off'"
+          spellcheck="false"
+          v-typing="{
+            finish: emitPhoneData,
+            timing: 100,
+          }"
+        />
       </div>
+      <!--select option-->
+      <div
+        ref="selectOptions"
+        class="w-full rounded border border-DADEE3 bg-white absolute z-[1] lbgm-phone-scrll"
+        v-if="openSelect"
+        data-widget-item="base-phone-select-group"
+        :class="{
+          'bottom-0': popupPos === 'top',
+          'mt-[0.281rem] top-full': popupPos === 'bottom',
+        }"
+        :style="{
+          maxHeight: `${listHeight}px`,
+        }"
+      >
+        <div
+          class="w-full py-2 px-4 cursor-pointer text-left hover:bg-[rgba(217,242,236,.5)]"
+          v-for="(country, index) in allowedCountries"
+          @click="choose(country)"
+          :key="index"
+        >
+          <span class="font-semibold text-xs text-394452">
+            {{ country.name }}
+          </span>
+        </div>
+      </div>
+    <!-- end core-->
     </div>
 
-    <!-- errors messages -->
+    <!-- messages -->
 
     <!-- error message -->
     <div

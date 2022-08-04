@@ -50,6 +50,23 @@ npm i @lbgm/phone-number-input
  }
  ```
 
+ ## Slots
+
+ ### arrow
+ ```html
+ <!-- to change arrow icon-->
+ <phone-input>
+  <template #arrow><icon /><template>
+ </phone-input>
+ ```
+
+ use global slot to append content at the end of the component.
+ ```html
+ <phone-input>
+   <div>Hello</div>
+ </phone-input>
+ ```
+
 
 ## Use
  main.ts :
