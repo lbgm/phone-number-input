@@ -106,6 +106,7 @@ npm i @lbgm/phone-number-input
  ## Use it with Vee-validate
 
  Sample wrapper code:
+ 
  ```html
  <template>
   <phone-input
@@ -151,7 +152,7 @@ export default {
 
     const validatePhone = (data: IPhoneData) => {
       handleChange(data.nationalNumber, false);
-      context.emit('phoneData', data);
+      context.emit('inputData', data);
     };
 
     onMounted(() => {

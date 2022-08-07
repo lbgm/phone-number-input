@@ -3,23 +3,29 @@
     ref="selectPhone"
     data-widget-item="baseinput"
     class="flex flex-col relative"
+    data-lbgm-phonenumberinput="component"
   >
     <!--phone-number-input core-->
-    <div data-widget-phone-number-input="lbgm" class="w-full flex flex-col relative">
+    <div data-children="core" class="w-full flex flex-col relative">
+      <!---->
       <label
+        v-if="label"
         class="cursor-pointer baseinput-label text-sm text-left leading-[1.125rem] -tracking-[0.1px] opacity-80 text-black font-semibold mb-2 select-none"
         :for="name"
-        v-if="label"
+        data-children="label"
       >
-        <span>{{ label }}</span
-        >&thinsp;<span
+        <span data-children="labelText">{{ label }}</span>
+        <!---->
+        <span
           v-if="required"
+          data-children="requiredStar"
           class="text-left text-DA1414 font-semibold opacity-80 text-xs"
-          >*</span
+          >&thinsp;*</span
         >
       </label>
       <!--input-->
       <div
+        data-children="inputcore"
         ref="selectPhoneButton"
         class="bg-white baseinput-core border w-full border-gray rounded-lg py-3 px-4 flex flex-shrink flex-nowrap items-center space-x-2"
         :class="{ error: hasError, success: hasSuccess }"
@@ -28,6 +34,7 @@
           @click="toggleSelect()"
           class="inline-flex flex-nowrap items-center space-x-2 cursor-pointer"
           ref="basePhoneArrow"
+          data-children="arrowGroup"
         >
           <template v-if="arrow">
             <span v-if="$slots.arrow" class="inline-flex flex-shrink-0">
@@ -45,6 +52,7 @@
         </span>
         <!---->
         <input
+          data-children="htmlInput"
           :placeholder="placeholder"
           class="border-0 outline-none appearance-none flex-shrink w-full bg-transparent"
           type="text"
@@ -66,7 +74,7 @@
         ref="selectOptions"
         class="w-full rounded border border-DADEE3 bg-white absolute z-[1] lbgm-phone-scrll"
         v-if="openSelect"
-        data-widget-item="base-phone-select-group"
+        data-children="countriesList"
         :class="{
           'bottom-0': popupPos === 'top',
           'mt-[0.281rem] top-full': popupPos === 'bottom',
@@ -80,6 +88,7 @@
           v-for="(country, index) in allowedCountries"
           @click="choose(country)"
           :key="index"
+          :data-country="country.iso2"
         >
           <span class="font-semibold text-xs text-394452">
             {{ country.name }}
@@ -94,6 +103,7 @@
     <!-- error message -->
     <div
       v-if="hasError"
+      data-children="error"
       class="rounded-lg w-full bg-danger-light flex flex-row space-x-1 py-1.5 px-2 mt-2 items-center select-none"
     >
       <span class="inline-flex flex-shrink-0">
@@ -107,6 +117,7 @@
     <!-- success message -->
     <div
       v-if="hasSuccess"
+      data-children="success"
       class="rounded-lg w-full bg-primary-light flex flex-row space-x-1 py-1.5 px-2 mt-2 items-center select-none"
     >
       <span class="inline-flex flexshrink-0">
@@ -339,28 +350,36 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-::placeholder {
-  font-weight: bold;
-  color: gray;
+[data-children="countriesList"] {
+  overflow-y: auto;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.15));
 }
 
-.error {
-  background: #feefef;
-  border: 1px solid #da1414;
-  //-webkit-box-shadow: 0 0 0 30px #feefef inset !important;
-}
+[data-children="inputcore"] {
+  input {
+    &::placeholder {
+      font-weight: bold;
+      color: gray;
+    }
+  }
 
-.success {
-  background: #edf9f0;
-  border: 1px solid #287d3c;
-}
+  &.error {
+    background: #feefef;
+    border: 1px solid #da1414;
 
-.error input {
-  -webkit-box-shadow: 0 0 0px 1000px #feefef inset !important;
-}
+    input {
+      -webkit-box-shadow: 0 0 0px 1000px #feefef inset !important;
+    }
+  }
 
-.success input {
-  -webkit-box-shadow: 0 0 0px 1000px #edf9f0 inset !important;
+  &.success {
+    background: #edf9f0;
+    border: 1px solid #287d3c;
+
+    input {
+      -webkit-box-shadow: 0 0 0px 1000px #edf9f0 inset !important;
+    }
+  }
 }
 
 input:-webkit-autofill,
@@ -368,10 +387,5 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
-}
-
-div [data-widget-item="base-phone-select-group"] {
-  overflow-y: auto;
-  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.15));
 }
 </style>
