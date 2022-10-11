@@ -13,7 +13,7 @@ const phoneData = ref({});
   {{ country }} <br />
   {{ phoneData }}
   <!-- app -->
-  <div class="w-5/12 m-auto mt-10 flex flex-col">
+  <div class="w-[300px] m-auto mt-10 flex flex-col">
     <phone-input
       @phone="phone = $event"
       @country="country = $event"
@@ -21,7 +21,8 @@ const phoneData = ref({});
       name="cphone"
       label="Entrer votre téléphone"
       required
-      :allowed="[]"
+      :allowed="['BJ', 'CI']"
+      :value="'22995318207'"
     />
   </div>
 </template>

@@ -165,7 +165,6 @@ import Green from "./icons/green-info.vue";
 
 import countries from "./parts/all-countries";
 import parsePhoneNumber from "libphonenumber-js";
-import { find } from "lodash";
 import { typing } from "../assets/directives";
 
 const vTyping = { ...typing };
@@ -255,14 +254,14 @@ const formatPhoneInput = (val: string): Record<any, any> | undefined => {
       dialCode: phoneNumber.countryCallingCode,
       name: function () {
         return (
-          find(countries, { iso2: this.iso2 }) as unknown as { name: string }
+          Array.from(countries).find((o: {iso2: string}) => o.iso2 === this.iso2) as unknown as { name: string }
         ).name;
       },
     };
   }
   // else
   return {
-    ...find(countries, { iso2: defaultCountry.value }),
+    ...Array.from(countries).find((o: {iso2: string}) => o.iso2 === defaultCountry.value),
   };
 };
 
@@ -361,6 +360,13 @@ onMounted(() => {
       font-weight: bold;
       color: gray;
     }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
+    }
   }
 
   &.error {
@@ -380,12 +386,5 @@ onMounted(() => {
       -webkit-box-shadow: 0 0 0px 1000px #edf9f0 inset !important;
     }
   }
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  transition: background-color 5000s ease-in-out 0s;
 }
 </style>
