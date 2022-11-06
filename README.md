@@ -79,7 +79,7 @@ npm i @lbgm/phone-number-input
  App.vue :
  ```js
  // import component style
- import '@lbgm/phone-number-input/dist/style.css';
+ import '@lbgm/phone-number-input/style';
  ```
 
  use component:
@@ -106,7 +106,7 @@ npm i @lbgm/phone-number-input
  ## Use it with Vee-validate
 
  Sample wrapper code:
- 
+
  ```html
  <template>
   <phone-input

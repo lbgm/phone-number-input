@@ -16,7 +16,26 @@ module.exports = {
       DA1414: "#DA1414",
       394452: "#394452",
     },
-    extend: {},
+    extend: {
+      lineHeight: {
+        "1dt125": "1.125rem"
+      },
+      letterSpacing: {
+        "n0dt1": "-0.1px"
+      },
+      zIndex: {
+        "one": "1"
+      },
+      backgroundColor: {
+        "217-242-236-dt5": "rgba(217,242,236,.5)"
+      },
+      margin: {
+        "mt0dt281": "0.281rem"
+      },
+      padding: {
+        "0dt375": "0.375rem"
+      }
+    },
   },
   plugins: [],
 };

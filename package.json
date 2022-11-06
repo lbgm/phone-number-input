@@ -1,15 +1,16 @@
 {
   "name": "@lbgm/phone-number-input",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "author": "@lbgm",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
-    "build-lib": "vite build && vue-tsc --emitDeclarationOnly --allowJs && mv dist/src dist/types",
+    "build-lib": "npm run build-scss && vite build && vue-tsc --emitDeclarationOnly --allowJs && mv dist/src dist/types",
     "type-check": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "build-scss": "npx tailwindcss -i ./src/assets/index.scss -o ./src/assets/tailwind.scss"
   },
   "engines": {
     "node": ">=14.18.3",
@@ -25,6 +26,10 @@
     ".": {
       "import": "./dist/phone-number-input.es.js",
       "require": "./dist/phone-number-input.umd.js"
+    },
+    "./style": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "dependencies": {
