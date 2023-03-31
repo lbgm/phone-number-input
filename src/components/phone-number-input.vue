@@ -157,23 +157,19 @@ import {
   onMounted,
   getCurrentInstance,
   watch,
+type ComponentInternalInstance,
+type Ref,
 } from "vue";
 
 import Down from "./icons/chevron-down.vue";
 import Red from "./icons/red-info.vue";
 import Green from "./icons/green-info.vue";
 
-import countries from "./parts/all-countries";
+import countries, { type Country } from "./parts/all-countries";
 import parsePhoneNumber from "libphonenumber-js";
 import { typing } from "../assets/directives";
 
 const vTyping = { ...typing };
-
-interface Country {
-  name: string;
-  dialoCode: string;
-  iso2: string;
-}
 
 const props = withDefaults(defineProps<Props>(), {
   value: "",
@@ -193,24 +189,24 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(["phone", "country", "phoneData"]);
 
-const openSelect = ref(false);
-const defaultSelected = ref<Record<string, string>>({});
-const defaultCountry = toRef(props, "defaultCountry");
-const filterCountries = toRef(props, "allowed");
-const basePhoneArrow = ref(null);
-const phone = ref("");
-const inputBase = ref(null);
+const openSelect: Ref<boolean> = ref(false);
+const defaultSelected: Ref<Record<string, string>> = ref<Record<string, string>>({});
+const defaultCountry: Ref<string> = toRef(props, "defaultCountry");
+const filterCountries: Ref<string[]> = toRef(props, "allowed");
+const basePhoneArrow: Ref<HTMLElement | null> = ref(null);
+const phone: Ref<string> = ref("");
+const inputBase: Ref<HTMLInputElement | null> = ref(null);
 
 const popupPos = ref("bottom");
 const listHeight = toRef(props, "listHeight");
-const that: any = getCurrentInstance();
+const that: ComponentInternalInstance | null = getCurrentInstance();
 
 /**
  * used to send custom Event: usable in case of scroll turning off when popup is under
  */
 const cev_dash_select = () => {
   const event = new CustomEvent("CEV_SELECT_POPUP", {
-    detail: { opened: openSelect.value, target: that.refs.selectPhone },
+    detail: { opened: openSelect.value, target: that?.refs.selectPhone },
   });
   document.body.dispatchEvent(event);
 };
@@ -219,9 +215,9 @@ const cev_dash_select = () => {
  * filt allowedCountries from props
  */
 const allowedCountries = computed((): Country[] => {
-  const tbl: any =
+  const tbl: Country[] =
     filterCountries.value.length !== 0
-      ? countries.filter((o: any) => filterCountries.value.includes(o.iso2))
+      ? countries.filter((o: Country) => filterCountries.value.includes(o.iso2))
       : countries;
   return tbl;
 });
@@ -234,7 +230,7 @@ const toggleSelect = () => {
   openSelect.value = !openSelect.value;
 
   // calculate popup position: top or bottom
-  const selectRect = that.refs.selectPhone.getBoundingClientRect();
+  const selectRect = (that?.refs.selectPhone as HTMLElement).getBoundingClientRect();
   // y
   popupPos.value = selectRect.bottom < listHeight.value ? "top" : "bottom";
 };

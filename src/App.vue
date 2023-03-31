@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 
 import PhoneInput from "@/components/phone-number-input.vue";
 
-const phone = ref("");
-const country = ref("");
-const phoneData = ref({});
+const phone: Ref<string> = ref("");
+const country: Ref<string> = ref("");
+const phoneData: Ref<Record<any, any>> = ref({});
 </script>
 
 <template>
-  {{ phone }} <br />
-  {{ country }} <br />
-  {{ phoneData }}
+  {{ phone }} - {{ country }} - {{ phoneData }}
   <!-- app -->
   <div class="w-64 m-auto mt-10 flex flex-col">
     <phone-input
@@ -21,7 +19,7 @@ const phoneData = ref({});
       name="cphone"
       label="Entrer votre téléphone"
       required
-      :allowed="['BJ', 'CI']"
+      :allowed="[]"
       :value="'22995318207'"
     />
   </div>

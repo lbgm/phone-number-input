@@ -132,7 +132,7 @@ interface IPhoneData {
 
 export default {
   setup(props: any, context: any) {
-    const that: any = getCurrentInstance();
+    const that: ComponentInternalInstance | null = getCurrentInstance();
 
     const {
       value: inputValue,
@@ -156,7 +156,7 @@ export default {
     };
 
     onMounted(() => {
-      if (that.refs.phoneInput.phone) {
+      if (that?.refs.phoneInput.phone) {
         handleChange(that.refs.phoneInput.phone);
       }
     });
