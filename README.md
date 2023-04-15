@@ -1,8 +1,8 @@
-# phone-number-input
+# Phone number input
 
 Simple Phone Number Input for VueJs
 
-![Screenshot](https://user-images.githubusercontent.com/92580505/182828046-989095ca-f6bf-420e-92fc-98fb99dab25e.png)
+![Screenshot](https://user-images.githubusercontent.com/92580505/232254767-9fbea1cc-5a68-490d-ba66-9a1303a2840b.png)
 
 ## install
 
@@ -10,33 +10,37 @@ Simple Phone Number Input for VueJs
 npm i @lbgm/phone-number-input
 ```
 
-## Props
+## Props & Types
 
-  Interface:
+```ts
+interface PhoneDATA {
+  country?: string;
+  dialCode?: string | number;
+  nationalNumber?: string | number;
+  number?: string | number;
+  isValid?: boolean;
+}
 
-  ```ts
-  interface Props {
-    value?: string;
-    label?: string;
-    hasError?: boolean;
-    hasSuccess?: boolean;
-    successMessage?: string;
-    errorMessage?: string;
-    placeholder?: string;
-    name?: string;
-    required?: boolean;
-    defaultCountry?: string;
-    arrow?: boolean;
-    listHeight?: number;
-    allowed?: string[];
- }
-  ```
+interface Props {
+  value?: string;
+  label?: string;
+  hasError?: boolean;
+  hasSuccess?: boolean;
+  successMessage?: string;
+  errorMessage?: string;
+  placeholder?: string;
+  name?: string;
+  required?: boolean;
+  defaultCountry?: string;
+  arrow?: boolean;
+  listHeight?: number;
+  allowed?: string[];
+}
 
- Default values:
+// default props values
 
- ```js
- {
-  value: "", // like '22997000000', ${dialCode}${nationalNumber}
+{
+  value: "", // like '22997000000',
   label: "",
   hasError: false,
   hasSuccess: false,
@@ -45,12 +49,15 @@ npm i @lbgm/phone-number-input
   placeholder: "",
   name: "",
   required: false,
-  defaultCountry: "CI",
+  defaultCountry: "BJ",
   arrow: true, // show or hide arrow
   listHeight: 150,
-  allowed: () => ["BJ", "CI"], // pass [] to show all countries
- }
- ```
+  allowed: () => [],
+}
+```
+
+- pass `value` on this format: `${dialCode}${nationalNumber}`
+- `allowed` is an array of country iso2 (string).
 
 ## Slots
 
@@ -96,21 +103,16 @@ npm i @lbgm/phone-number-input
       @phone="phone = $event"
       @country="country = $event"
       @phoneData="phoneData = $event"
-      name="cphone"
-      label="Entrer votre téléphone"
+      name="phone-number-input"
+      label="Enter your phone"
       required
-      :allowed="[]"
       :value="'22997788842'"
     />
  ```
 
- ![Using sample view](https://user-images.githubusercontent.com/92580505/182823223-6be9aa4c-b4d8-4835-aaae-8b79052c0caf.png)
-
- ```js
-  console.log(phone) : 22997788842
-  console.log(country) : BJ
-  console.log(phoneData) : { "country": "BJ", "dialCode": "229", "nationalNumber": "97788842", "number": "+22997788842", "isValid": true }
- ```
+- `phone` is string
+- `country` is string
+- `phoneData` is type [PhoneDATA](#props--types)
 
 ## Use it with Vee-validate
 
@@ -130,7 +132,7 @@ npm i @lbgm/phone-number-input
 ```ts
 <script lang="ts">
 import { useField } from 'vee-validate';
-import { computed, onMounted, getCurrentInstance } from 'vue';
+import { computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
 import type { PhoneDATA } from '@lbgm/phone-number-input';
 
 export default {
