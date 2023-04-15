@@ -182,10 +182,10 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: "",
   name: "",
   required: false,
-  defaultCountry: "CI",
+  defaultCountry: "BJ",
   arrow: true,
   listHeight: 150,
-  allowed: () => ["BJ", "CI"],
+  allowed: () => [],
 });
 
 const emit = defineEmits(["phone", "country", "phoneData"]);
