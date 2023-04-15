@@ -2,10 +2,11 @@
 import { ref, type Ref } from "vue";
 
 import PhoneInput from "@/components/phone-number-input.vue";
+import type { PhoneDATA } from "./components/parts/types";
 
 const phone: Ref<string> = ref("");
 const country: Ref<string> = ref("");
-const phoneData: Ref<Record<any, any>> = ref({});
+const phoneData: Ref<PhoneDATA> = ref({});
 </script>
 
 <template>

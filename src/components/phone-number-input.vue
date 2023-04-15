@@ -47,7 +47,7 @@
           <span
             class="opacity-50 select-none inline-flex flex-whrink-0 font-semibold text-black text-left text-sm leading-1dt125"
           >
-            {{ `+${defaultSelected.dialCode}` }}
+            {{ `+${defaultSelected?.dialCode}` }}
           </span>
         </span>
         <!---->
@@ -167,6 +167,7 @@ import Green from "./icons/green-info.vue";
 
 import countries, { type Country } from "./parts/all-countries";
 import parsePhoneNumber from "libphonenumber-js";
+import type { PhoneNumber } from "libphonenumber-js";
 import { typing } from "../assets/directives";
 
 const vTyping = { ...typing };
@@ -190,7 +191,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(["phone", "country", "phoneData"]);
 
 const openSelect: Ref<boolean> = ref(false);
-const defaultSelected: Ref<Record<string, string>> = ref<Record<string, string>>({});
+const defaultSelected: Ref<Country> = ref<Country>() as Ref<Country>;
 const defaultCountry: Ref<string> = toRef(props, "defaultCountry");
 const filterCountries: Ref<string[]> = toRef(props, "allowed");
 const basePhoneArrow: Ref<HTMLElement | null> = ref(null);
@@ -240,24 +241,20 @@ const toggleSelect = () => {
  * used to format Phone Input
  * @param val
  */
-const formatPhoneInput = (val: string): Record<any, any> | undefined => {
-  const phoneNumber: any = parsePhoneNumber(`+${val}`);
+const formatPhoneInput = (val: string): Country => {
+  const phoneNumber: PhoneNumber | undefined = parsePhoneNumber(`+${val}`);
   if (phoneNumber) {
-    phone.value = phoneNumber.nationalNumber;
+    phone.value = phoneNumber?.nationalNumber as string;
 
     return {
-      iso2: phoneNumber.country,
-      dialCode: phoneNumber.countryCallingCode,
-      name: function () {
-        return (
-          Array.from(countries).find((o: {iso2: string}) => o.iso2 === this.iso2) as unknown as { name: string }
-        ).name;
-      },
+      iso2: phoneNumber?.country as string,
+      dialCode: phoneNumber?.countryCallingCode as string,
+      name: countries.find((o: Country) => o.iso2 === phoneNumber?.country as string)?.name as string,
     };
   }
   // else
   return {
-    ...Array.from(countries).find((o: {iso2: string}) => o.iso2 === defaultCountry.value),
+    ...countries.find((o: Country) => o.iso2 === defaultCountry.value) as Country,
   };
 };
 
@@ -304,7 +301,7 @@ const emitAll = () :void => {
  * @param country
  */
 const choose = (country: Country) => {
-  defaultSelected.value = country as unknown as Record<string, string>;
+  defaultSelected.value = country;
   openSelect.value = false;
   emitAll();
 };
@@ -329,7 +326,7 @@ watch(openSelect, () => {
 
 onMounted(() => {
   // initialize default country selected
-  defaultSelected.value = formatPhoneInput(props.value) as Record<any, any>;
+  defaultSelected.value = formatPhoneInput(props.value);
   emitAll();
 
   // outside
