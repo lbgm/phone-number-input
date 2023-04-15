@@ -46,9 +46,9 @@ npm i @lbgm/phone-number-input
   name: "",
   required: false,
   defaultCountry: "CI",
-  arrow: true,
+  arrow: true, // show or hide arrow
   listHeight: 150,
-  allowed: () => ["BJ", "CI"],
+  allowed: () => ["BJ", "CI"], // pass [] to show all countries
  }
  ```
 
