@@ -682,18 +682,22 @@ video {
   padding-right: 0.5rem;
 }
 
-.text-left {
-  text-align: left;
+.pb-80 {
+  padding-bottom: 20rem;
 }
 
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+.text-left {
+  text-align: left;
 }
 
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .font-semibold {
@@ -702,6 +706,10 @@ video {
 
 .font-medium {
   font-weight: 500;
+}
+
+.leading-4 {
+  line-height: 1rem;
 }
 
 .leading-1dt125 {

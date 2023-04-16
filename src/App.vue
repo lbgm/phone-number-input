@@ -1,28 +1,29 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
 
 import PhoneInput from "@/components/phone-number-input.vue";
+import type { PhoneDATA } from "./components/parts/types";
 
-const phone = ref("");
-const country = ref("");
-const phoneData = ref({});
+const phone: Ref<string> = ref("");
+const country: Ref<string> = ref("");
+const phoneData: Ref<PhoneDATA> = ref({});
 </script>
 
 <template>
-  {{ phone }} <br />
-  {{ country }} <br />
-  {{ phoneData }}
   <!-- app -->
-  <div class="w-64 m-auto mt-10 flex flex-col">
+  <div class="w-64 m-auto mt-10 pb-80 flex flex-col">
+    <span class="text-xs leading-4">
+      {{ phone }} - {{ country }} - {{ phoneData }}
+    </span>
+    <!-- component -->
     <phone-input
       @phone="phone = $event"
       @country="country = $event"
       @phoneData="phoneData = $event"
-      name="cphone"
-      label="Entrer votre téléphone"
+      name="phone-number-input"
+      label="Enter your phone"
       required
-      :allowed="['BJ', 'CI']"
-      :value="'22995318207'"
+      :value="'22997788842'"
     />
   </div>
 </template>

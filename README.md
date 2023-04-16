@@ -1,40 +1,46 @@
-# phone-number-input
+# Phone number input
 
 Simple Phone Number Input for VueJs
 
-<img width="599" alt="image" src="https://user-images.githubusercontent.com/92580505/182828046-989095ca-f6bf-420e-92fc-98fb99dab25e.png">
-
+![Screenshot](https://user-images.githubusercontent.com/92580505/232254767-9fbea1cc-5a68-490d-ba66-9a1303a2840b.png)
 
 ## install
+
 ```sh
 npm i @lbgm/phone-number-input
 ```
 
+## Props & Types
 
-## Props
-  Interface:
-  ```ts
-  interface Props {
-    value?: string;
-    label?: string;
-    hasError?: boolean;
-    hasSuccess?: boolean;
-    successMessage?: string;
-    errorMessage?: string;
-    placeholder?: string;
-    name?: string;
-    required?: boolean;
-    defaultCountry?: string;
-    arrow?: boolean;
-    listHeight?: number;
-    allowed?: string[];
- }
-  ```
+```ts
+interface PhoneDATA {
+  country?: string;
+  dialCode?: string | number;
+  nationalNumber?: string | number;
+  number?: string | number;
+  isValid?: boolean;
+}
 
- Default values:
- ```js
- {
-  value: "", // like '22997000000', ${dialCode}${nationalNumber}
+interface Props {
+  value?: string;
+  label?: string;
+  hasError?: boolean;
+  hasSuccess?: boolean;
+  successMessage?: string;
+  errorMessage?: string;
+  placeholder?: string;
+  name?: string;
+  required?: boolean;
+  defaultCountry?: string;
+  arrow?: boolean;
+  listHeight?: number;
+  allowed?: string[];
+}
+
+// default props values
+
+{
+  value: "", // like '22997000000',
   label: "",
   hasError: false,
   hasSuccess: false,
@@ -43,16 +49,20 @@ npm i @lbgm/phone-number-input
   placeholder: "",
   name: "",
   required: false,
-  defaultCountry: "CI",
-  arrow: true,
+  defaultCountry: "BJ",
+  arrow: true, // show or hide arrow
   listHeight: 150,
-  allowed: () => ["BJ", "CI"],
- }
- ```
+  allowed: () => [],
+}
+```
 
- ## Slots
+- pass `value` on this format: `${dialCode}${nationalNumber}`
+- `allowed` is an array of country iso2 (string).
 
- ### arrow
+## Slots
+
+### arrow
+
  ```html
  <!-- to change arrow icon-->
  <phone-input>
@@ -61,49 +71,50 @@ npm i @lbgm/phone-number-input
  ```
 
  use global slot to append content at the end of the component.
+
  ```html
  <phone-input>
    <div>Hello</div>
  </phone-input>
  ```
 
-
 ## Use
+
  main.ts :
+
  ```js
   import { PhoneInput } from '@lbgm/phone-number-input';
 
   // register as global component
   app.component('PhoneInput', PhoneInput);
  ```
+
  App.vue :
+
  ```js
  // import component style
  import '@lbgm/phone-number-input/style';
  ```
 
  use component:
+
  ```html
     <phone-input
       @phone="phone = $event"
       @country="country = $event"
       @phoneData="phoneData = $event"
-      name="cphone"
-      label="Entrer votre téléphone"
+      name="phone-number-input"
+      label="Enter your phone"
       required
-      :allowed="[]"
       :value="'22997788842'"
     />
  ```
- <img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182823223-6be9aa4c-b4d8-4835-aaae-8b79052c0caf.png">
 
- ```js
-  console.log(phone) : 22997788842
-  console.log(country) : BJ
-  console.log(phoneData) : { "country": "BJ", "dialCode": "229", "nationalNumber": "97788842", "number": "+22997788842", "isValid": true }
- ```
+- `phone` is string
+- `country` is string
+- `phoneData` is type [PhoneDATA](#props--types)
 
- ## Use it with Vee-validate
+## Use it with Vee-validate
 
  Sample wrapper code:
 
@@ -117,22 +128,16 @@ npm i @lbgm/phone-number-input
   />
 </template>
 ```
+
 ```ts
 <script lang="ts">
 import { useField } from 'vee-validate';
-import { computed, onMounted, getCurrentInstance } from 'vue';
-
-interface IPhoneData {
-  country?: string;
-  dialCode?: string;
-  nationalNumber?: string;
-  number?: string;
-  isValid?: boolean;
-}
+import { computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
+import type { PhoneDATA } from '@lbgm/phone-number-input';
 
 export default {
   setup(props: any, context: any) {
-    const that: any = getCurrentInstance();
+    const that: ComponentInternalInstance | null = getCurrentInstance();
 
     const {
       value: inputValue,
@@ -150,13 +155,13 @@ export default {
       return errorMessage.value !== undefined;
     });
 
-    const validatePhone = (data: IPhoneData) => {
+    const validatePhone = (data: PhoneDATA) => {
       handleChange(data.nationalNumber, false);
       context.emit('inputData', data);
     };
 
     onMounted(() => {
-      if (that.refs.phoneInput.phone) {
+      if (that?.refs.phoneInput.phone) {
         handleChange(that.refs.phoneInput.phone);
       }
     });
@@ -170,4 +175,3 @@ export default {
 };
 </script>
 ```
-
