@@ -13,7 +13,7 @@ const phoneData = ref({});
   {{ country }} <br />
   {{ phoneData }}
   <!-- app -->
-  <div class="w-[300px] m-auto mt-10 flex flex-col">
+  <div class="w-64 m-auto mt-10 flex flex-col">
     <phone-input
       @phone="phone = $event"
       @country="country = $event"

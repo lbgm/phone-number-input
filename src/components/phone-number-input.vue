@@ -10,7 +10,7 @@
       <!---->
       <label
         v-if="label"
-        class="cursor-pointer baseinput-label text-sm text-left leading-[1.125rem] -tracking-[0.1px] opacity-80 text-black font-semibold mb-2 select-none"
+        class="cursor-pointer baseinput-label text-sm text-left leading-1dt125 tracking-n0dt1 opacity-80 text-black font-semibold mb-2 select-none"
         :for="name"
         data-children="label"
       >
@@ -45,7 +45,7 @@
             </span>
           </template>
           <span
-            class="opacity-50 select-none inline-flex flex-whrink-0 font-semibold text-black text-left text-sm leading-[1.225rem]"
+            class="opacity-50 select-none inline-flex flex-whrink-0 font-semibold text-black text-left text-sm leading-1dt125"
           >
             {{ `+${defaultSelected.dialCode}` }}
           </span>
@@ -72,19 +72,19 @@
       <!--select option-->
       <div
         ref="selectOptions"
-        class="w-full rounded border border-DADEE3 bg-white absolute z-[1] lbgm-phone-scrll"
+        class="w-full rounded border border-DADEE3 bg-white absolute z-one lbgm-phone-scrll"
         v-if="openSelect"
         data-children="countriesList"
         :class="{
           'bottom-0': popupPos === 'top',
-          'mt-[0.281rem] top-full': popupPos === 'bottom',
+          'mt-mt0dt281 top-full': popupPos === 'bottom',
         }"
         :style="{
           maxHeight: `${listHeight}px`,
         }"
       >
         <div
-          class="w-full py-2 px-4 cursor-pointer text-left hover:bg-[rgba(217,242,236,.5)]"
+          class="w-full py-2 px-4 cursor-pointer text-left hover:bg-217-242-236-dt5"
           v-for="(country, index) in allowedCountries"
           @click="choose(country)"
           :key="index"
@@ -104,7 +104,7 @@
     <div
       v-if="hasError"
       data-children="error"
-      class="rounded-lg w-full bg-danger-light flex flex-row space-x-1 py-1.5 px-2 mt-2 items-center select-none"
+      class="rounded-lg w-full bg-danger-light flex flex-row space-x-1 py-0dt375 px-2 mt-2 items-center select-none"
     >
       <span class="inline-flex flex-shrink-0">
         <Red />
@@ -118,7 +118,7 @@
     <div
       v-if="hasSuccess"
       data-children="success"
-      class="rounded-lg w-full bg-primary-light flex flex-row space-x-1 py-1.5 px-2 mt-2 items-center select-none"
+      class="rounded-lg w-full bg-primary-light flex flex-row space-x-1 py-0dt375 px-2 mt-2 items-center select-none"
     >
       <span class="inline-flex flexshrink-0">
         <Green />
@@ -349,6 +349,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@import '../assets/tailwind.scss';
+
 [data-children="countriesList"] {
   overflow-y: auto;
   filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.15));
