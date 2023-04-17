@@ -12,11 +12,7 @@
 //    iso2 code,
 //    International dial code
 // ]
-export type Country = {
-  name: string;
-  dialCode: string;
-  iso2: string;
-}
+import type { Country } from "./types";
 
 const allCountries = [
     [

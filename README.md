@@ -130,48 +130,42 @@ interface Props {
 ```
 
 ```ts
-<script lang="ts">
+<script setup lang="ts">
 import { useField } from 'vee-validate';
-import { computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
-import type { PhoneDATA } from '@lbgm/phone-number-input';
+import { computed, onMounted, useAttrs, getCurrentInstance, type ComponentInternalInstance } from 'vue';
+import { PhoneInput, type PhoneDATA } from '@lbgm/phone-number-input';
 
-export default {
-  setup(props: any, context: any) {
-    const that: ComponentInternalInstance | null = getCurrentInstance();
+type T_PhoneInput = typeof PhoneInput;
 
-    const {
-      value: inputValue,
-      errorMessage,
-      handleBlur,
-      handleChange,
-      meta,
-    } = useField(context.attrs.name, undefined, {
-      initialValue: context.attrs.value ? context.attrs.value : '',
-      validateOnValueUpdate: false,
-    });
+const that: ComponentInternalInstance | null = getCurrentInstance();
+const attrs = useAttrs();
+const emit = defineEmits(['inputData']);
 
-    // compute error from vee-validate
-    const hasError = computed((): boolean => {
-      return errorMessage.value !== undefined;
-    });
+const {
+  value: inputValue,
+  errorMessage,
+  handleBlur,
+  handleChange,
+  meta,
+} = useField(attrs.name, undefined, {
+  initialValue: attrs.value ? attrs.value : '',
+  validateOnValueUpdate: false,
+});
 
-    const validatePhone = (data: PhoneDATA) => {
-      handleChange(data.nationalNumber, false);
-      context.emit('inputData', data);
-    };
+// compute error from vee-validate
+const hasError = computed((): boolean => {
+  return errorMessage.value !== undefined;
+});
 
-    onMounted(() => {
-      if (that?.refs.phoneInput.phone) {
-        handleChange(that.refs.phoneInput.phone);
-      }
-    });
-
-    return {
-      hasError,
-      errorMessage,
-      validatePhone,
-    };
-  },
+const validatePhone = (data: PhoneDATA) => {
+  handleChange(data.nationalNumber, false);
+  emit('inputData', data);
 };
+
+onMounted(() => {
+  if ((that?.refs?.phoneInput as T_PhoneInput).phone) {
+    handleChange((that?.refs.phoneInput as T_PhoneInput).phone);
+  }
+});
 </script>
 ```
