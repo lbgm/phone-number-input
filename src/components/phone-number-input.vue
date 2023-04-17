@@ -165,10 +165,11 @@ import Down from "./icons/chevron-down.vue";
 import Red from "./icons/red-info.vue";
 import Green from "./icons/green-info.vue";
 
-import countries, { type Country } from "./parts/all-countries";
+import countries from "./parts/all-countries";
 import parsePhoneNumber from "libphonenumber-js";
 import type { PhoneNumber } from "libphonenumber-js";
 import { typing } from "../assets/directives";
+import type { PhoneDATA, Country } from './parts/types';
 
 const vTyping = { ...typing };
 
@@ -283,7 +284,7 @@ const emitPhoneData = (): void => {
     nationalNumber: ph?.nationalNumber,
     number: ph?.number,
     isValid: ph?.isValid(),
-  });
+  } as PhoneDATA);
 };
 
 /**
@@ -338,6 +339,14 @@ onMounted(() => {
       openSelect.value = false;
     }
   });
+});
+
+defineExpose({
+  defaultSelected,
+  defaultCountry,
+  phone,
+  popupPos,
+  listHeight,
 });
 </script>
 

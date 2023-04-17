@@ -5,3 +5,9 @@ export interface PhoneDATA {
     number?: string | number;
     isValid?: boolean;
 }
+
+export type Country = {
+    name: string;
+    dialCode: string;
+    iso2: string;
+}

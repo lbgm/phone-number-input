@@ -1,6 +1,6 @@
 {
   "name": "@lbgm/phone-number-input",
-  "version": "1.1.6-light",
+  "version": "1.1.6-alpha.1",
   "author": "@lbgm",
   "scripts": {
     "dev": "vite",
