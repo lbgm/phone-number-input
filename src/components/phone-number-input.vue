@@ -171,6 +171,7 @@ import type { PhoneNumber } from "libphonenumber-js";
 import { typing } from "../assets/directives";
 import type { PhoneDATA, Country } from './parts/types';
 
+const FACTORY_COUNTRY = 'BJ';
 const vTyping = { ...typing };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -183,7 +184,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: "",
   name: "",
   required: false,
-  defaultCountry: "BJ",
+  defaultCountry: FACTORY_COUNTRY,
   arrow: true,
   listHeight: 150,
   allowed: () => [],
@@ -206,7 +207,7 @@ const that: ComponentInternalInstance | null = getCurrentInstance();
 /**
  * used to send custom Event: usable in case of scroll turning off when popup is under
  */
-const cev_dash_select = () => {
+const sendCevPopupOpened = () => {
   const event = new CustomEvent("CEV_SELECT_POPUP", {
     detail: { opened: openSelect.value, target: that?.refs.selectPhone },
   });
@@ -242,7 +243,7 @@ const toggleSelect = () => {
  * used to format Phone Input
  * @param val
  */
-const formatPhoneInput = (val: string): Country => {
+const formatPhoneInput = (val?: string): Country => {
   const phoneNumber: PhoneNumber | undefined = parsePhoneNumber(`+${val}`);
   if (phoneNumber) {
     phone.value = phoneNumber?.nationalNumber as string;
@@ -255,7 +256,7 @@ const formatPhoneInput = (val: string): Country => {
   }
   // else
   return {
-    ...countries.find((o: Country) => o.iso2 === defaultCountry.value) as Country,
+    ...countries.find((o: Country) => o.iso2 === ( !countries.map(c => c.iso2).includes(defaultCountry.value) ? FACTORY_COUNTRY : defaultCountry.value )) as Country,
   };
 };
 
@@ -322,7 +323,13 @@ const onPhoneInput = (event: any) => {
 
 watch(openSelect, () => {
   // dispatch custom HTML event
-  cev_dash_select();
+  sendCevPopupOpened();
+});
+
+watch(defaultCountry, () => {
+  // watch defaultCountry changes
+  defaultSelected.value = formatPhoneInput();
+  emitAll();
 });
 
 onMounted(() => {
